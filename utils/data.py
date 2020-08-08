@@ -1,5 +1,6 @@
 import os
 import sys
+from collections import defaultdict
 
 import numpy as np
 import pandas as pd
@@ -34,3 +35,26 @@ def tfidf(train_df, test_df, max_features=None):
     test_tfidf_df = pd.DataFrame(test_tfidf.toarray())
 
     return train_tfidf_df, test_tfidf_df
+
+def frequent_words(df, threshold=100):
+
+    descriptions = df['description'].values.tolist()
+
+    candidates = []
+    num_appear = defaultdict(int)
+    for sentence in descriptions:
+        words = sentence.split(' ')
+        for word in words:
+
+            if len(word) == 0:
+                continue
+            if word == '.':
+                continue
+            if word[-1] == '.':
+                word = word[:-1]
+
+            num_appear[word] += 1
+            if num_appear[word] == threshold:
+                candidates.append(word)
+    
+    return candidates
