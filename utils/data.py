@@ -58,3 +58,46 @@ def frequent_words(df, threshold=100):
                 candidates.append(word)
     
     return candidates
+
+def important_words(train_df, min_num_word=20, th_score=0.49):
+
+    # description
+    train_descriptions = train_df['description'].values.tolist()
+
+    # count num_appear for each classes
+    num_appear = {}
+    for i, sentence in enumerate(train_descriptions):
+        jobflag = int(train_df[i:i+1]['jobflag'].values)
+
+        words = sentence.split(' ')
+        for word in words:
+
+            if len(word) == 0 or word == '.':
+                continue
+            if word[-1] == '.' or word[-1] == ',':
+                word = word[:-1]
+            
+            if not word in num_appear.keys():
+                num_appear[word] = [0, 0, 0, 0]
+            num_appear[word][jobflag-1] += 1
+        
+    
+    # scoring
+    scores = {}
+    for word, appears in num_appear.items():
+        if sum(appears) <= min_num_word:
+            continue
+        score = 0
+        for appear in appears:
+            score = max(score, appear/sum(appears))
+        scores[word] = score
+    
+    # select important words
+    scores = sorted(scores.items(), key=lambda x:x[1], reverse=True)
+    importances = []
+    for word, score in scores:
+        if score < th_score:
+            break
+        importances.append(word)
+
+    return importances
