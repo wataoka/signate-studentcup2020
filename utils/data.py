@@ -36,7 +36,7 @@ def tfidf(train_df, test_df, max_features=None):
 
     return train_tfidf_df, test_tfidf_df
 
-def frequent_words(df, threshold=100):
+def get_frequent_words(df, threshold=100):
 
     descriptions = df['description'].values.tolist()
 
@@ -59,7 +59,7 @@ def frequent_words(df, threshold=100):
     
     return candidates
 
-def important_words(train_df, min_num_word=20, th_score=0.49):
+def get_important_words(train_df, min_num_word=20, th_score=0.49):
 
     # description
     train_descriptions = train_df['description'].values.tolist()
