@@ -43,9 +43,9 @@ if __name__ == "__main__":
     
     # config
     blend_list = [
-        ['20200806-105031_baseline.csv', 0.3],
-        ['20200806-111304_lgb.csv', 0.3],
-        ['submit_model2_bert.csv', 0.4]
+        ['20200810-203854_lgb.csv', 0.4],
+        ['20200810-213106_lgb_importance.csv', 0.3],
+        ['submit_model2_bert.csv', 0.3]
     ]
 
     # prepare submit
