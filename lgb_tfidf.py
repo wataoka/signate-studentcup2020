@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     max_features = 3000
 
-    n_folds = 3
+    n_folds = 5
     num_boost_round = 1000
     early_stopping_rounds = 100
 
