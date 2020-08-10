@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
     max_features = 3000
 
-    n_folds = 8
+    n_folds = 5
     num_boost_round = 1000
     early_stopping_rounds = 100
 
@@ -37,6 +37,11 @@ if __name__ == "__main__":
     train_df, test_df, sample_submit_df = load_dataset()
     X, X_test = tfidf(train_df, test_df, max_features=max_features)
     y = train_df['jobflag'].astype(int)-1
+
+    train_y = train_df['jobflag'].values - 1
+    weight = 1 / pd.DataFrame(train_y).reset_index().groupby(0).count().values
+    weight = weight[train_y].ravel()
+    weight /= weight.sum()
 
     # ---------- Kfold ---------- #
     scores = []
@@ -46,8 +51,8 @@ if __name__ == "__main__":
 
         X_train, X_valid = X.iloc[train_idx], X.iloc[valid_idx]
         y_train, y_valid = y.iloc[train_idx], y.iloc[valid_idx]
-        train_data = lgb.Dataset(X_train, label=y_train)
-        valid_data = lgb.Dataset(X_valid, label=y_valid)
+        train_data = lgb.Dataset(X_train, label=y_train, weight=weight[train_idx])
+        valid_data = lgb.Dataset(X_valid, label=y_valid, weight=weight[valid_idx])
 
         params = {
             'objective': 'multiclass',
