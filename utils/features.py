@@ -72,7 +72,6 @@ def get_important_words(train_df, min_num_word=20, th_score=0.49):
                 num_appear[word] = [0, 0, 0, 0]
             num_appear[word][jobflag-1] += 1
         
-    
     # scoring
     scores = {}
     for word, appears in num_appear.items():
