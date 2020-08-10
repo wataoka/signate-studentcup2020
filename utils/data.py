@@ -15,6 +15,13 @@ def load_dataset():
     submit_sample = pd.read_csv(os.path.join(DATASET_DIR, 'submit_sample.csv'))
     return train, test, submit_sample
 
+def get_weight(train_df):
+    train_y = train_df['jobflag'].values - 1
+    weight = 1 / pd.DataFrame(train_y).reset_index().groupby(0).count().values
+    weight = weight[train_y].ravel()
+    weight /= weight.sum()
+    return weight
+
 def tfidf(train_df, test_df, max_features=None):
 
     # prepare

@@ -7,7 +7,7 @@ import lightgbm as lgb
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import f1_score
 
-from utils.data import load_dataset, tfidf
+from utils.data import load_dataset, tfidf, get_weight
 from utils.metrics import metric_f1
 from utils.observer import get_current_time
 from utils.utils import fix_seed
@@ -38,10 +38,7 @@ if __name__ == "__main__":
     X, X_test = tfidf(train_df, test_df, max_features=max_features)
     y = train_df['jobflag'].astype(int)-1
 
-    train_y = train_df['jobflag'].values - 1
-    weight = 1 / pd.DataFrame(train_y).reset_index().groupby(0).count().values
-    weight = weight[train_y].ravel()
-    weight /= weight.sum()
+    weight = get_weight(train_df)
 
     # ---------- Kfold ---------- #
     scores = []
