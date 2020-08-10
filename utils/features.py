@@ -1,5 +1,6 @@
 import os
 import sys
+from tqdm import tqdm
 from collections import defaultdict
 
 import numpy as np
@@ -50,7 +51,7 @@ def get_frequent_words(df, threshold=100):
     
     return candidates
 
-def get_important_words(train_df, min_num_word=20, th_score=0.49):
+def get_important_words(train_df, min_num_word=10, th_score=0.4):
 
     # description
     train_descriptions = train_df['description'].values.tolist()
@@ -91,3 +92,30 @@ def get_important_words(train_df, min_num_word=20, th_score=0.49):
         important_words.append(word)
 
     return important_words
+
+def importance(train_df, test_df):
+
+    def count(desc, target):
+        ans = 0
+        for word in desc.split(' '):
+            if len(word) == 0 or word == '.':
+                continue
+            if word[-1] == '.' or word[-1] == ',':
+                word = word[:-1]
+            if word == target:
+                ans += 1
+        return ans
+    
+    important_words = get_important_words(train_df)
+
+    train_data = pd.DataFrame([])
+    print('Creating train data...')
+    for word in tqdm(important_words):
+        train_data[word] = train_df['description'].apply(count, target=word)
+
+    test_data = pd.DataFrame([])
+    print('Creating test data...')
+    for word in tqdm(important_words):
+        test_data[word] = test_df['description'].apply(count, target=word)
+    
+    return train_data, test_data
