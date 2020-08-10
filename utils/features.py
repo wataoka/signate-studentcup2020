@@ -84,10 +84,10 @@ def get_important_words(train_df, min_num_word=20, th_score=0.49):
     
     # select important words
     scores = sorted(scores.items(), key=lambda x:x[1], reverse=True)
-    importances = []
+    important_words = []
     for word, score in scores:
         if score < th_score:
             break
-        importances.append(word)
+        important_words.append(word)
 
-    return importances
+    return important_words
