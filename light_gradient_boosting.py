@@ -7,7 +7,8 @@ import lightgbm as lgb
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import f1_score
 
-from utils.data import load_dataset, tfidf, get_weight
+from utils.data import load_dataset, get_weight
+from utils.features import tfidf
 from utils.metrics import metric_f1
 from utils.observer import get_current_time
 from utils.utils import fix_seed
