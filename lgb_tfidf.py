@@ -86,7 +86,7 @@ if __name__ == "__main__":
         pred = np.argmax(y_test_pred, axis=1)+1
         submit = pd.DataFrame({'index':test_df['id'], 'pred':pred})
 
-        model_name = "lgb"
+        model_name = "lgb_tfidf"
         current_time = get_current_time()
         filename = f"{current_time}_{model_name}.csv"
         filepath = os.path.join('submits', filename)
