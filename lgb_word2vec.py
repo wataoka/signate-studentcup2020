@@ -29,8 +29,8 @@ if __name__ == "__main__":
     seed=1; fix_seed(seed)
 
     n_folds = 5
-    num_boost_round = 1000
-    early_stopping_rounds = 100
+    num_boost_round = 100
+    early_stopping_rounds = 20
 
     # data
     train_df, test_df, sample_submit_df = load_dataset()
@@ -54,6 +54,8 @@ if __name__ == "__main__":
             'objective': 'multiclass',
             'num_class': 4,
             'metric': 'None',
+            'max_bin': 100,
+            'num_leaves': 20,
             'verbose': -1,
             'seed': seed
         }
