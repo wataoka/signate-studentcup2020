@@ -54,8 +54,9 @@ if __name__ == "__main__":
             'objective': 'multiclass',
             'num_class': 4,
             'metric': 'None',
-            'max_bin': 100,
+            'max_bin': 50,
             'num_leaves': 20,
+            'lambda_l2': 0.1,
             'verbose': -1,
             'seed': seed
         }
@@ -66,7 +67,7 @@ if __name__ == "__main__":
                           valid_sets=[train_data,valid_data],
                           num_boost_round=num_boost_round,
                           early_stopping_rounds=early_stopping_rounds,
-                          verbose_eval=50,
+                          verbose_eval=10,
                           feval=metric_f1)
         
         # evaluate
