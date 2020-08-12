@@ -39,12 +39,11 @@ if __name__ == "__main__":
     NUM_CLASS = 4
     N_FOLDS = 4
 
-    weight = [
-        0.0004006410256410257,
-        0.0007183908045977012,
-        0.00018168604651162793,
-        0.00042881646655231566
-    ]
+    num_for_labels = [624, 348, 1376, 583]
+    total = sum(num_for_labels)
+    weight = []
+    for num in num_for_labels:
+        weight.append((total-num)/num)
 
     # fix seed
     seed_everything(SEED)
@@ -78,6 +77,7 @@ if __name__ == "__main__":
     model = ClassificationModel('bert',
                                 'bert-base-cased',
                                 num_labels=4,
+                                weight=weight,
                                 args=params,
                                 use_cuda=True)
     
