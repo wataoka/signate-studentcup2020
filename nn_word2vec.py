@@ -36,7 +36,7 @@ if __name__ == "__main__":
     seed=1; fix_seed(seed)
 
     n_folds = 5
-    epochs = 600
+    epochs = 1400
     batch_size = 512
 
     # data
@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
             valid_f1 = f1_score(true_list, pred_list, average="macro")
 
-            if (epoch+1)%10 == 0 or epoch == 0:
+            if (epoch+1)%100 == 0 or epoch == 0:
                 print(f'Epoch:{epoch+1}/{epochs} \t '    \
                       f'train_loss: {train_loss:.3f},  ' \
                       f'train_acc: {train_acc:.3f},  '   \
