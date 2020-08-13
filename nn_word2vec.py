@@ -53,7 +53,6 @@ if __name__ == "__main__":
     # weight
     weight = get_weight(train_df)
 
-
     # ---------- Kfold ---------- #
     preds_for_test = [[0 for _ in range(4)] for _ in range(len(X_test))]
     cv = StratifiedKFold(n_splits=n_folds, shuffle=False, random_state=seed)
