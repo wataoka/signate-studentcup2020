@@ -36,7 +36,7 @@ if __name__ == "__main__":
     seed=1; fix_seed(seed)
 
     n_folds = 5
-    epochs = 1400
+    epochs = 200
     batch_size = 512
 
     # data
@@ -65,7 +65,7 @@ if __name__ == "__main__":
         # model
         model = NNTfidf()
         criterion = nn.BCELoss()
-        optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+        optimizer = optim.Adam(model.parameters(), lr=0.001)
 
         for epoch in range(epochs):
 
