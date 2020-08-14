@@ -74,8 +74,8 @@ if __name__ == "__main__":
         "learning_rate": 1e-4,
         "manual_seed":SEED,
     }
-    model = ClassificationModel('bert',
-                                'bert-base-cased',
+    model = ClassificationModel('roberta',
+                                'roberta-base',
                                 num_labels=4,
                                 weight=weight,
                                 args=params,
