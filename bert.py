@@ -67,11 +67,11 @@ if __name__ == "__main__":
 
     params = {
         "overwrite_output_dir": "outputs/",
-        "max_seq_length": 32,
-        "train_batch_size": 32,
+        "max_seq_length": 128,
+        "train_batch_size": 64,
         "eval_batch_size": 32,
-        "num_train_epochs": 2,
-        "learning_rate": 1e-4,
+        "num_train_epochs": 3,
+        "learning_rate": 5e-5,
         "manual_seed":SEED,
     }
     model = ClassificationModel('bert',
