@@ -67,15 +67,15 @@ if __name__ == "__main__":
 
     params = {
         "overwrite_output_dir": "outputs/",
-        "max_seq_length": 128,
+        "max_seq_length": 32,
         "train_batch_size": 32,
-        "eval_batch_size": 64,
+        "eval_batch_size": 32,
         "num_train_epochs": 2,
         "learning_rate": 1e-4,
         "manual_seed":SEED,
     }
-    model = ClassificationModel('roberta',
-                                'roberta-base',
+    model = ClassificationModel('bert',
+                                'bert-base-cased',
                                 num_labels=4,
                                 weight=weight,
                                 args=params,
