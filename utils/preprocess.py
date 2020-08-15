@@ -68,7 +68,7 @@ def clean_description(train_df):
 
         overlap_df = pd.concat([overlap_df, df[i:i+1]], axis=0)
 
-    df = df.drop(overlap_ids)
+    df = train_df.drop(overlap_ids)
     df = pd.concat([df, overlap_df], axis=0)
 
     return df
