@@ -12,6 +12,7 @@ from utils.features import word2vec
 from utils.metrics import metric_f1
 from utils.observer import get_current_time
 from utils.utils import fix_seed
+from utils.preprocess import clean_description
 
 
 def parse_args():
@@ -34,6 +35,7 @@ if __name__ == "__main__":
 
     # data
     train_df, test_df, sample_submit_df = load_dataset()
+    train_df = clean_description(train_df)
     X, X_test = word2vec(train_df, test_df)
     y = train_df['jobflag'].astype(int)-1
 
