@@ -39,7 +39,7 @@ if __name__ == "__main__":
     NUM_CLASS = 4
     N_FOLDS = 4
 
-    num_for_labels = [624, 348, 1376, 583]
+    num_for_labels = [404, 320, 345, 674]
     total = sum(num_for_labels)
     weight = []
     for num in num_for_labels:
@@ -68,10 +68,10 @@ if __name__ == "__main__":
     params = {
         "overwrite_output_dir": "outputs/",
         "max_seq_length": 128,
-        "train_batch_size": 64,
-        "eval_batch_size": 32,
-        "num_train_epochs": 3,
-        "learning_rate": 5e-5,
+        "train_batch_size": 32,
+        "eval_batch_size": 64,
+        "num_train_epochs": 2,
+        "learning_rate": 1e-4,
         "manual_seed":SEED,
     }
     model = ClassificationModel('bert',
