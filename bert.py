@@ -14,7 +14,11 @@ from simpletransformers.classification import ClassificationModel
 
 # functions
 def metric_f1(labels, preds):
-    return f1_score(labels, preds, average='macro')
+    scores = f1_score(labels, preds, average=None)
+    weights = 1 / np.array([0.2314, 0.1833, 0.1982, 0.3872])
+    weights /= sum(weights)
+    f1_pb_score = scores@weights
+    return f1_pb_score
 
 def seed_everything(seed):
     """for reproducibility.
@@ -39,7 +43,7 @@ if __name__ == "__main__":
     NUM_CLASS = 4
     N_FOLDS = 4
 
-    num_for_labels = [404, 320, 345, 674]
+    num_for_labels = [624, 348, 1376, 583]
     total = sum(num_for_labels)
     weight = []
     for num in num_for_labels:
@@ -97,4 +101,4 @@ if __name__ == "__main__":
     filepath = os.path.join(SUBMITS_DIR, filename)
     submit.to_csv(filepath, index=False, header=False)
 
-    print(f'Saved {filename}')
+    print(f'Saved {filename}'))
