@@ -12,7 +12,6 @@ from utils.features import tfidf
 from utils.metrics import metric_f1
 from utils.observer import get_current_time
 from utils.utils import fix_seed
-from utils.preprocess import clean_description
 
 
 def parse_args():
@@ -37,7 +36,6 @@ if __name__ == "__main__":
 
     # data
     train_df, test_df, sample_submit_df = load_dataset()
-    train_df = clean_description(train_df)
     X, X_test = tfidf(train_df, test_df, max_features=max_features)
     y = train_df['jobflag'].astype(int)-1
 
@@ -59,6 +57,7 @@ if __name__ == "__main__":
             'num_class': 4,
             'metric': 'None',
             'verbose': -1,
+            'lambda_l2': 0.1,
             'seed': seed
         }
 
