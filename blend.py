@@ -44,8 +44,9 @@ if __name__ == "__main__":
     # config
     blend_list = [
         ['20200812-125739_bert.csv', 0.4],
-        ['20200813-210634_nn_word2vec.csv', 0.3],
-        ['20200810-203854_lgb.csv', 0.3]
+        ['20200813-210634_nn_word2vec.csv', 0.2],
+        ['20200810-203854_lgb.csv', 0.2],
+        ['20200810-213106_lgb_importance.csv', 0.2]
     ]
 
     # prepare submit
@@ -74,3 +75,4 @@ if __name__ == "__main__":
     filename = f'{current_time}_blend.csv'
     filepath = os.path.join(SUBMITS_DIR, filename)
     submit.to_csv(filepath, index=False, header=False)
+    print(f'Saved {filename}')
