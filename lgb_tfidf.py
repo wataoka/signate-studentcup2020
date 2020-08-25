@@ -67,7 +67,7 @@ if __name__ == "__main__":
                           valid_sets=[train_data,valid_data],
                           num_boost_round=num_boost_round,
                           early_stopping_rounds=early_stopping_rounds,
-                          verbose_eval=50,
+                          verbose_eval=10,
                           feval=metric_f1)
         
         # evaluate
