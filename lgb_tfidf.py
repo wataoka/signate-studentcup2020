@@ -56,8 +56,8 @@ if __name__ == "__main__":
             'objective': 'multiclass',
             'num_class': 4,
             'metric': 'None',
+            'max_bin': 50,
             'verbose': -1,
-            'lambda_l2': 0.1,
             'seed': seed
         }
 
