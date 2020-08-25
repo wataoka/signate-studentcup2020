@@ -28,7 +28,7 @@ if __name__ == "__main__":
     # hyper params
     seed=1; fix_seed(seed)
 
-    max_features = 3000
+    max_features = None
 
     n_folds = 5
     num_boost_round = 1000
@@ -56,7 +56,6 @@ if __name__ == "__main__":
             'objective': 'multiclass',
             'num_class': 4,
             'metric': 'None',
-            'max_bin': 50,
             'verbose': -1,
             'seed': seed
         }
