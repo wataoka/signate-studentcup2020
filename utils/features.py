@@ -9,7 +9,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 
 sys.path.append('..')
-from constants import REPRESENTATIONS_DIR
+from constants import REPRESENTATIONS_DIR, PRETRAINED_DIR
 
 def tfidf(train_df, test_df, max_features=None):
 
@@ -146,6 +146,65 @@ def word2vec(train_df, test_df, mode='mean'):
             vec_list.append(word2vec[word])
         vec_list = np.array(vec_list)
         return vec_list
+
+    train_descriptions = train_df['description'].values.tolist()
+    train_data = pd.DataFrame([])
+    print('Creating train data...')
+    for description in tqdm(train_descriptions):
+        vec_list = get_vec_list(description)
+        if mode == 'mean':
+            vec = vec_list.mean(axis=0)
+        else:
+            print(f'InvalidMode: {mode} is not supported in word2vec.')
+            exit(1)
+        vec = pd.DataFrame(vec.reshape(1, len(vec)))
+        train_data = pd.concat([train_data, vec], axis=0)
+
+    test_descriptions = test_df['description'].values.tolist()
+    test_data = pd.DataFrame([])
+    print('Creating test data...')
+    for description in tqdm(test_descriptions):
+        vec_list = get_vec_list(description)
+        if mode == 'mean':
+            vec = vec_list.mean(axis=0)
+        else:
+            print(f'InvalidMode: {mode} is not supported in word2vec.')
+            exit(1)
+        vec = pd.DataFrame(vec.reshape(1, len(vec)))
+        test_data = pd.concat([test_data, vec], axis=0)
+    
+    return train_data, test_data
+
+def glove(train_df, test_df, mode='mean'):
+
+    def get_vec_list(desc):
+        vec_list = []
+        for word in desc.split(' '):
+            word = word.lower()
+            if len(word) == 0 or word == '.':
+                continue
+            if word not in embeddings_dict.keys():
+                continue
+            if word[-1] in ['.', ',', ';', ')']:
+                word = word[:-1]
+            if len(word) == 0:
+                continue
+            if word[0] in ['(']:
+                word = word[1:]
+            vec_list.append(embeddings_dict[word])
+        vec_list = np.array(vec_list)
+        return vec_list
+
+    filepath = os.path.join(PRETRAINED_DIR, 'glove.6B', 'glove.6B.300d.txt')
+
+    print('Preparing data... (expected time is 30[sec])')
+    embeddings_dict = {}
+    with open(filepath, 'r') as f:
+        for line in tqdm(f):
+            values = line.split()
+            word = values[0]
+            vector = np.asarray(values[1:], "float32")
+            embeddings_dict[word] = vector
 
     train_descriptions = train_df['description'].values.tolist()
     train_data = pd.DataFrame([])
