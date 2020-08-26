@@ -36,7 +36,7 @@ if __name__ == "__main__":
     seed=1; fix_seed(seed)
 
     n_folds = 5
-    epochs = 200
+    epochs = 600
     batch_size = 512
 
     # data
@@ -53,19 +53,20 @@ if __name__ == "__main__":
     # weight
     weight = get_weight(train_df)
 
+
     # ---------- Kfold ---------- #
     preds_for_test = [[0 for _ in range(4)] for _ in range(len(X_test))]
     cv = StratifiedKFold(n_splits=n_folds, shuffle=False, random_state=seed)
-    cv_loss_list = []
-    cv_acc_list = []
-    cv_f1_list = []
     for fold_idx, (train_idx, valid_idx) in enumerate(cv.split(trainset.X, trainset.jobflag)):
         print(f'\nFold {fold_idx+1}')
+        cv_loss_list = []
+        cv_acc_list = []
+        cv_f1_list = []
 
         # model
         model = NNTfidf()
         criterion = nn.BCELoss()
-        optimizer = optim.Adam(model.parameters(), lr=0.001)
+        optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 
         for epoch in range(epochs):
 

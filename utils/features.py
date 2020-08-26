@@ -133,6 +133,7 @@ def word2vec(train_df, test_df, mode='mean'):
     def get_vec_list(desc):
         vec_list = []
         for word in desc.split(' '):
+            word = word.lower()
             if len(word) == 0 or word == '.':
                 continue
             if word not in word2vec.keys():
